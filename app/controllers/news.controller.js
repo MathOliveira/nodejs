@@ -57,6 +57,23 @@ exports.findOne = (req, res) => {
   });
 };
 
+// Find a News list by slug
+exports.findBySlug = (req, res) => {
+  News.findBySlug(req.params.slug, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found News with slug ${req.params.slug}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving News slug " + req.params.slug
+        });
+      }
+    } else res.send(data);
+  });
+};
+
 // Update a News identified by the newsId in the request
 exports.update = (req, res) => {
   // Validate Request

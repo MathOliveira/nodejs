@@ -10,6 +10,9 @@ module.exports = app => {
   // Retrieve a single News with newsId
   app.get("/news/:newsId", news.findOne);
 
+  // Retrieve News list by slug
+  app.get("/news/slug/:slug", news.findBySlug);
+
   // Update a News with newsId
   app.put("/news/:newsId", news.update);
 
