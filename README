@@ -1,0 +1,5 @@
+TODO
+
+* Login
+* Token/jwt on resquests
+* Pagination on getall and getslug from news
