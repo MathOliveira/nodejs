@@ -67,9 +67,7 @@ exports.login = (req, res) => {
       }); 
     } else {
       if (data.password == req.query.password){
-        res.status(200).send({
-          message: "User " + req.query.mail + " successfully logged in"
-        });
+        res.status(200).send(data);
       }else{
         res.status(401).send({
           message: "Wrong user and password"
