@@ -30,7 +30,12 @@ exports.create = (req, res) => {
 
 // Retrieve all News from the database.
 exports.findAll = (req, res) => {
-  News.getAll((err, data) => {
+  limit = req.query.limit;
+  limit = (typeof limit !== 'undefined') ? limit : 15;
+  offset = req.query.offset;
+  offset = (typeof offset !== 'undefined') ? offset : 0;
+  slug = req.query.slug;
+  News.getAll(slug, limit, offset, (err, data) => {
     if (err)
       res.status(500).send({
         message:
@@ -51,23 +56,6 @@ exports.findOne = (req, res) => {
       } else {
         res.status(500).send({
           message: "Error retrieving News with id " + req.params.newsId
-        });
-      }
-    } else res.send(data);
-  });
-};
-
-// Find a News list by slug
-exports.findBySlug = (req, res) => {
-  News.findBySlug(req.params.slug, (err, data) => {
-    if (err) {
-      if (err.kind === "not_found") {
-        res.status(404).send({
-          message: `Not found News with slug ${req.params.slug}.`
-        });
-      } else {
-        res.status(500).send({
-          message: "Error retrieving News slug " + req.params.slug
         });
       }
     } else res.send(data);

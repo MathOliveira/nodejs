@@ -57,6 +57,28 @@ exports.findOne = (req, res) => {
   });
 };
 
+// Login
+exports.login = (req, res) => {
+  console.log(req.query.mail)
+  User.findByMail(req.query.mail, (err, data) => {
+    if (err) {
+      res.status(401).send({
+        message: "Wrong user and password"
+      }); 
+    } else {
+      if (data.password == req.query.password){
+        res.status(200).send({
+          message: "User " + req.query.mail + " successfully logged in"
+        });
+      }else{
+        res.status(401).send({
+          message: "Wrong user and password"
+        });
+      }
+    };
+  });
+};
+
 // Update a User identified by the userId in the request
 exports.update = (req, res) => {
   // Validate Request

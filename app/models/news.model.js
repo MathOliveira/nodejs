@@ -42,21 +42,10 @@ News.findById = (newsId, result) => {
   });
 };
 
-News.findBySlug = (slug, result) => {
-  sql.query(`SELECT * FROM news WHERE slug = "${slug}"`, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-    }
 
-    console.log("news: ", res);
-    result(null, res);
-  });
-};
-
-News.getAll = result => {
-  sql.query("SELECT * FROM news", (err, res) => {
+News.getAll = (slug, limit, offset, result) => {
+  slug = (typeof slug !== 'undefined') ? `WHERE slug = "${slug}"` : ``;
+  sql.query(`SELECT * FROM news ${slug} LIMIT ${limit} OFFSET ${offset}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
